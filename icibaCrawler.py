@@ -26,27 +26,23 @@ def lookup_word_level(word):
     soup = bs4.BeautifulSoup(res.text)
     base_level_tags = soup.select('div[class="base-level"] span')
     for each_level in base_level_tags:
-        level_match = re.search('\w+', each_level.get_text())
+        level_match = re.search(r'\w+', each_level.get_text())
         if level_match is not None:
             word_level.append(level_match.group())
 
     return word_level
 
 
-def check_word(word):
-    word_meaning = ''
+def lookup_word(word):
+    word_meaning = word + '\n'
     for k, v in lookup_word_mean(word).items():
-        # print("%-4s" % k, end=' ')
         word_meaning += "%-4s" % k
         for ev in v:
-            # print("%s" % ev, end='')
             word_meaning += "%s" % ev
-        # print()
         word_meaning += "\n"
     for each_level in lookup_word_level(word):
-        # print(each_level, end=' ')
         word_meaning += "%s " % each_level
     return word_meaning
 
 
-print(check_word("theory"))
+print(lookup_word("cheat sheet"))
